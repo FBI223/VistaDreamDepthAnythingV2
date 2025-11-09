@@ -3,13 +3,8 @@ Dust3R reconstrucion
 GeoWizard Estimation
 Smooth Projection
 '''
-import torch
-import PIL,cv2
-import numpy as np
-from PIL import Image
-from ops.gs.basic import Frame
+from DepthAnythingV2.depth_anything_pro_depth import DepthAnythingProDepth
 from ops.utils import *
-from ops.depth_pro import Depth_Pro_Tool
 from ops.connect import Smooth_Connect_Tool
 
 
@@ -19,8 +14,15 @@ class Reconstruct_Tool():
         self._load_model()
         self.connector = Smooth_Connect_Tool()
         
+#    def _load_model(self):
+#        self.pro_dpt = Depth_Pro_Tool(ckpt=self.cfg.model.mde.dpt_pro.ckpt,device='cpu')
+
     def _load_model(self):
-        self.pro_dpt = Depth_Pro_Tool(ckpt=self.cfg.model.mde.dpt_pro.ckpt,device='cpu')
+        self.pro_dpt = DepthAnythingProDepth(
+            ckpt="DepthAnythingV2/checkpoints/depth_anything_v2_vitl.pth",
+            device="cuda" if torch.cuda.is_available() else "cpu",
+            depth_range=(0.5, 20.0)
+        )
 
     def _ProDpt_(self, rgb, intrinsic=None):
         # conduct reconstruction

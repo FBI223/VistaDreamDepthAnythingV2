@@ -10,4 +10,5 @@ __pycache__
 */*/*/__pycache__
 */*/*/*/__pycache__
 */*/*/*/*/__pycache__
-/Depth-Anything-V2/.idea/
+/DepthAnythingV2/.idea/
+/DepthAnythingV2/checkpoints/
