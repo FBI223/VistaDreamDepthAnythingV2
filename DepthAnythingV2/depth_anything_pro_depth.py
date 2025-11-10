@@ -2,8 +2,8 @@ import torch
 import numpy as np
 import cv2
 from PIL import Image
-from depth_anything_v2.dpt import DepthAnythingV2
-
+#from depth_anything_v2.dpt import DepthAnythingV2
+from DepthAnythingV2.depth_anything_v2.dpt import DepthAnythingV2
 
 class DepthAnythingProDepth:
     """

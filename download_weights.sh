@@ -5,12 +5,6 @@
 #
 # Fooocus basic model
 
-# === Hugging Face auth (optional, tylko jeśli modele są prywatne) ===
-export HF_TOKEN="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"
-
-wget --header="Authorization: Bearer $HF_TOKEN" \
-  -O tools/DepthPro/checkpoints/depth_anything_v2_vitl.pth \
-  "https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth"
 
 wget -P tools/Fooocus/models/checkpoints/ https://huggingface.co/lllyasviel/fav_models/resolve/main/fav/juggernautXL_v8Rundiffusion.safetensors 
 # Fooocus lora model
