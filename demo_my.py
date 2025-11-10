@@ -3,12 +3,9 @@ import os
 from pipe.cfgs import load_cfg
 from pipe.c2f_recons import Pipeline
 
-import os
-os.environ["FOOOCUS_VRAM_STATE"] = "LOW_VRAM"
-
 
 # Ścieżka bazowa do folderów WAWEL
-BASE_DIR = "VistDreamDepthAnythingV2/WAWEL_MODIFIED"
+BASE_DIR = "VistaDreamDepthAnythingV2/WAWEL_MODIFIED"
 
 # Wczytanie konfiguracji
 cfg = load_cfg("pipe/cfgs/basic.yaml")
