@@ -1,16 +1,14 @@
-
 import os
 from pipe.cfgs import load_cfg
 from pipe.c2f_recons import Pipeline
 
+# 📂 Bazowy folder (zmień jeśli inna lokalizacja)
+BASE_DIR = "/content/VistaDreamDepthAnythingV2/DepthAnythingV2/WAWEL_MODIFIED"
 
-# Ścieżka bazowa do folderów WAWEL
-BASE_DIR = "VistaDreamDepthAnythingV2/WAWEL_MODIFIED"
-
-# Wczytanie konfiguracji
+# ⚙️ Wczytaj konfigurację
 cfg = load_cfg("pipe/cfgs/basic.yaml")
 
-# Przejście przez foldery 1–6
+# 🔁 Iteruj po folderach 1–6
 for i in range(1, 7):
     folder_path = os.path.join(BASE_DIR, str(i))
     image_path = os.path.join(folder_path, f"{i}.jpg")
@@ -19,8 +17,18 @@ for i in range(1, 7):
         print(f"❌ Brak pliku: {image_path}")
         continue
 
+    # 📤 Folder wyjściowy
+    output_dir = os.path.join(folder_path, "output")
+    os.makedirs(output_dir, exist_ok=True)
+
     print(f"\n=== 🔷 Przetwarzanie folderu {i} → {image_path} ===")
-    cfg.scene.input.rgb = image_path  # ustaw aktualny obraz
-    vistadream = Pipeline(cfg)        # twórz pipeline dla każdej sceny
-    vistadream()                      # uruchom przetwarzanie
-    print(f"✅ Zakończono przetwarzanie {i}.jpg\n")
+
+    # Ustaw wejście i wyjście w konfiguracji
+    cfg.scene.input.rgb = image_path
+    cfg.scene.output.dir = output_dir
+
+    # Uruchom pipeline
+    vistadream = Pipeline(cfg)
+    vistadream()
+
+    print(f"✅ Wyniki zapisane w: {output_dir}\n")

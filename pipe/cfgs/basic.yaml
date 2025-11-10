@@ -47,3 +47,5 @@ scene:
     blur: False # first blurring rendering images
     gsopt_iters: 256
   
+  output:
+    dir: 'data/output'
