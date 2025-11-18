@@ -29,6 +29,13 @@ class Spiral(Traj_Base):
         cameras = []
         for i in range(self.nframe):
             cameras.append((pos[i],targets[i],camera_ups[i]))
+
+        for i in range(len(cameras)):
+            C, T, U = cameras[i]
+            C[0] = 0.0
+            C[1] = 0.0
+            cameras[i] = (C, T, U)
+
         return cameras
 
     def __call__(self):
