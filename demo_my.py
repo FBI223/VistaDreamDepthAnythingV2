@@ -3,7 +3,7 @@ from pipe.cfgs import load_cfg
 from pipe.c2f_recons import Pipeline
 
 # 📂 Bazowy folder (zmień jeśli inna lokalizacja)
-BASE_DIR = "/content/VistaDreamDepthAnythingV2/DepthAnythingV2/WAWEL_MODIFIED"
+BASE_DIR = "/content/VistaDreamDepthAnythingV2/WAWEL_MODIFIED_SMALLER"
 
 # ⚙️ Wczytaj konfigurację
 cfg = load_cfg("pipe/cfgs/basic.yaml")
