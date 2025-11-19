@@ -65,9 +65,15 @@ class Pipeline():
     def _initialization(self,rgb):
         rgb = np.array(rgb)[:,:,:3]
         # conduct outpainting on rgb and change cu,cv
+        '''
         outpaint_frame :Frame = self.rgb_inpaintor(Frame(rgb=rgb),
                                                    outpaint_selections=self.outpaint_selections,
                                                    outpaint_extend_times=self.outpaint_extend_times)
+        '''
+
+        outpaint_frame = Frame(rgb=rgb)
+        outpaint_frame.inpaint = np.zeros_like(rgb[..., 0], bool)
+
         # conduct reconstruction on outpaint results
         _,intrinsic,_ = self.reconstructor._ProDpt_(rgb) # estimate focal on input view
         metric_dpt,intrinsic,edge_msk = self.reconstructor._ProDpt_(outpaint_frame.rgb)
@@ -114,6 +120,7 @@ class Pipeline():
         self.dense_trajs = _generate_trajectory(self.cfg,self.scene)
         
     def _pose_to_frame(self,pose,margin=32):
+        margin=0
         extrinsic = np.linalg.inv(pose)
         H = self.scene.frames[0].H + margin
         W = self.scene.frames[0].W + margin

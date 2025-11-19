@@ -48,19 +48,22 @@ class Inpaint_Tool():
         # --------------------- Fooocus ----------------------
         print('Inpaint-Fooocus[1/2] Fooocus inpainting...')
         image = frame.rgb
-        mask = np.zeros_like(image,bool) if len(outpaint_selections)>0 else frame.inpaint
+        #mask = np.zeros_like(image,bool) if len(outpaint_selections)>0 else frame.inpaint
+        mask = frame.inpaint
         fooocus_result = self.fooocus(image_number=1,
                             prompt=prompt + ' 8K, no large circles, no cameras, no fisheye.',
                             negative_prompt='Any fisheye, any large circles, any blur, unrealism.',
-                            outpaint_selections=outpaint_selections,
-                            outpaint_extend_times=outpaint_extend_times,
+                            outpaint_selections=[], # outpaint_selections=outpaint_selections,
+                            outpaint_extend_times=0.0, # outpaint_extend_times=outpaint_extend_times
                             origin_image=image,
                             mask_image=mask,
                             seed=self.cfg.scene.outpaint.seed)[0]
         torch.cuda.empty_cache()
-        
+
+        '''
         # reset the frame for outpainting
         if len(outpaint_selections) > 0.:
+            # zwiększanie H, W + przesunięcie intrinsics
             assert len(outpaint_selections) == 4
             small_H, small_W = frame.rgb.shape[0:2]
             large_H, large_W = fooocus_result.shape[0:2]
@@ -76,7 +79,11 @@ class Inpaint_Tool():
             inpaint = np.ones_like(fooocus_result[...,0])
             inpaint[begin_H:(begin_H+small_H),begin_W:(begin_W+small_W)] *= 0.
             frame.inpaint = inpaint > 0.5
+            
+        '''
+
         frame.rgb = fooocus_result
+
         
         print('Inpaint-Fooocus[2/2] Assign Frame...')
         return frame
