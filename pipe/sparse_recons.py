@@ -116,11 +116,11 @@ class Pipeline():
     def _pose_to_frame(self,pose,margin=32):
         margin=0
         extrinsic = np.linalg.inv(pose)
-        H = self.scene.frames[0].H + margin
-        W = self.scene.frames[0].W + margin
+        H = self.scene.frames[0].H
+        W = self.scene.frames[0].W
         prompt = self.scene.frames[-1].prompt
         intrinsic = deepcopy(self.scene.frames[0].intrinsic)
-        intrinsic[0,-1], intrinsic[1,-1] = W/2, H/2
+        intrinsic[0, -1], intrinsic[1, -1] = W / 2, H / 2
         frame = Frame(H=H,W=W,intrinsic=intrinsic,extrinsic=extrinsic,prompt=prompt)
         frame = self.scene._render_for_inpaint(frame)  
         return frame
@@ -150,24 +150,9 @@ class Pipeline():
         return frame   
 
     def _inpaint_next_frame(self,margin=32):
-        frame = self._next_frame(margin)
-        if frame is None: return None
-        # inpaint rgb
-        frame = self.rgb_inpaintor(frame)
-        # inpaint dpt
-        connect_dpt,metric_dpt,_,edge_msk = self.reconstructor._Guide_ProDpt_(frame.rgb,frame.intrinsic,frame.dpt,~frame.inpaint)
-        frame.dpt = connect_dpt
-        frame = self.removalor(self.scene,frame)
-        sky = self.sky_segor(frame.rgb)
-        frame.sky = sky
-        frame.dpt[sky] = self.sky_value
-        frame.inpaint = (frame.inpaint) & (~sky)
-        frame.inpaint_wo_edge = (frame.inpaint) & (~edge_msk)
-        # determine target depth and normal
-        frame.ideal_dpt = metric_dpt
-        # temp visualization
-        save_pic(frame.rgb,self.coarse_interval_rgb_fn)
-        self.scene._add_trainable_frame(frame)
+        #frame = self._next_frame(margin)
+        pass
+
         return 0
 
     def _coarse_scene(self):

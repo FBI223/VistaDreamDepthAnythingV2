@@ -24,6 +24,9 @@ class Inpaint_Tool():
         return prompt   
 
     def __call__(self, frame:Frame, outpaint_selections=[], outpaint_extend_times=0.0):
+
+        return frame
+
         '''
         Must be Frame type
         '''

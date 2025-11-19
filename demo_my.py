@@ -8,8 +8,8 @@ BASE_DIR = "/content/VistaDreamDepthAnythingV2/DepthAnythingV2/WAWEL_MODIFIED"
 # ⚙️ Wczytaj konfigurację
 cfg = load_cfg("pipe/cfgs/basic.yaml")
 
-# 🔁 Iteruj po folderach 1–6
-for i in range(1, 7):
+# 🔁 Iteruj po folderach 3-3
+for i in range(3, 4):
     folder_path = os.path.join(BASE_DIR, str(i))
     image_path = os.path.join(folder_path, f"{i}.jpg")
 
