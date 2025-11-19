@@ -73,6 +73,8 @@ class Pipeline():
 
         outpaint_frame = Frame(rgb=rgb)
         outpaint_frame.inpaint = np.zeros_like(rgb[..., 0], bool)
+        outpaint_frame.H = rgb.shape[0]
+        outpaint_frame.W = rgb.shape[1]
 
         # conduct reconstruction on outpaint results
         _,intrinsic,_ = self.reconstructor._ProDpt_(rgb) # estimate focal on input view
