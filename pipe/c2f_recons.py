@@ -101,6 +101,7 @@ class Pipeline():
         input_frame.inpaint_wo_edge = (~input_edg)
         input_frame.ideal_dpt = deepcopy(input_dpt)
         input_frame.prompt = outpaint_frame.prompt
+        input_frame.prompt = ""
         # outpaint frame
         sky = self.sky_segor(outpaint_frame.rgb)
         outpaint_frame.sky = sky
@@ -108,7 +109,9 @@ class Pipeline():
         outpaint_frame.dpt = metric_dpt
         outpaint_frame.ideal_dpt = deepcopy(metric_dpt)
         outpaint_frame.inpaint = (outpaint_frame.inpaint)
-        outpaint_frame.inpaint_wo_edge = (outpaint_frame.inpaint)&(~edge_msk)
+        #outpaint_frame.inpaint_wo_edge = (outpaint_frame.inpaint)&(~edge_msk)
+        outpaint_frame.inpaint_wo_edge = ~edge_msk
+
         # temp visualization
         save_pic(outpaint_frame.rgb,self.coarse_interval_rgb_fn)
         # add init frame
