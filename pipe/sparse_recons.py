@@ -97,14 +97,14 @@ class Pipeline():
                           extrinsic=dust3r_frame.extrinsic,
                           prompt=self.prompt)
             if i==0:
-                frame.inpaint=np.ones_like(dust3r_frame.dpt)>0.1,
+                frame.inpaint=(np.ones_like(dust3r_frame.dpt) > 0.1)
                 frame.inpaint_wo_edge= ~edge_mask
             else:
                 #temp_frame = self.scene._render_for_inpaint(deepcopy(frame))
                 #frame.inpaint = temp_frame.inpaint
                 frame.inpaint = np.zeros_like(frame.rgb[..., 0], bool)
-
-                frame.inpaint_wo_edge = temp_frame.inpaint & (~edge_mask)
+                frame.inpaint_wo_edge = ~edge_mask
+                #frame.inpaint_wo_edge = temp_frame.inpaint & (~edge_mask)
             frame.keep = True
             self.scene._add_trainable_frame(frame)
         self.scene = GS_Train_Tool(self.scene,iters=256)()
