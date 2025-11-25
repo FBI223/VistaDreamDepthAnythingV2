@@ -58,6 +58,9 @@ class DepthAnythingAdapterMetric:
         # Skalowanie do pseudo-metrycznego zakresu
         depth_m = self.depth_min + (self.depth_max - self.depth_min) * depth_rel
 
+        # ⬅️ ODWRÓCENIE MAPY GŁĘBOKOŚCI
+        depth_m = depth_m.max() - depth_m
+
         # Macierz intrinsics (zgodna z Depth Pro)
         intrinsic = np.eye(3, dtype=np.float32)
         if f_px is not None:
